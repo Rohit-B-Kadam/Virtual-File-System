@@ -1,0 +1,7 @@
+This is demo1.txt file
+demo1.txt ,  demo2.txt and   Folder/demo3.txt are hard link of inode   68266 ;
+
+hard link is name given to inode;
+
+All this file are point same block;
+this is window
