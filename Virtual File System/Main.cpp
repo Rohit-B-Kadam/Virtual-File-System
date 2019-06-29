@@ -15,15 +15,19 @@ int main()
 	char arr[1024];
 	char *ptr;
 
+	// Initialise Super Block and DILB
 	InitialiseSuperBlock();
 	CreateDILB();
+
+	// Create shell process
+	SetUareaForProcess();
 	
 	while(1)
 	{
 		fflush(stdin);
 		strcpy_s(str,"");
 
-		printf("\nMarvellous VFS: > ");
+		printf("\nUnix File System: > ");
 		fgets(str,80,stdin);
 
 		count = sscanf(str , "%s%s%s%s",command[0],command[1],command[2],command[3]);

@@ -1,7 +1,83 @@
-VIRTUAL FILE SYSTEM
-	This is Research Oriented Project to simulate the existing system.
-	we have create file sytem on RAM.
+# VIRTUAL FILE SYSTEM
+This is Research Oriented Project to simulate the existing Unix File system.
 
-	so we have consider following thing
-	1. Disk Inode List Table and Incore Inode Table as one.
-	2. here we have consider one UAREA .
+create Following datastructure to implement filesystem
+1. Superblock
+1. UArea (1)	
+1. UFDT (array) 
+1. File Table (LinkList)
+1. Incore Inode table (limited linklist)
+1. Buffer Cache	(limited linklist)
+
+we have create a shell which accept the command from the user.
+
+Written our own system call 
+1. open
+2. create
+3. read
+4. write
+5. lseek
+6. rm
+7. stat
+8. ls
+
+man command for help
+
+___
+
+## Working of system class
+
+### create
+
+- Allocating free Inode.
+- Get free index in UFDT.
+- Create new node in Filetable and set address in UFDT.
+- Fill information in __Filetable__ (count = 1, mode, offset = 0)
+- Get free block of data.
+- Fill file information in Inode.
+
+### rm
+
+- Get inode number for File Name.
+- linkcount--
+
+### open
+
+- Get Inode Number. 
+- Check the permission satisfy.
+- Get free UFDT index.
+- Create entry File Table index.
+- Get Iode Address.
+- Fill FileTable Info
+
+### close
+
+- reference_count--
+- remove the entry from FileTable.
+- set null in UFDT
+
+### read
+
+- check if the open mode satisfy "READ" or not
+- read the data from the offset(file table) position till the size mention. 
+- copy to provide the char pointer
+
+### write
+
+- check if the open mode satisfy "WRITE" or not
+- write the data from the offset(file table) position. 
+
+### lseek
+
+- change the offset to the given offset.
+
+### stat
+
+- Set Inode Number.
+- Display information of that inode.
+
+### ls
+
+- Traverse all Inode List
+
+___

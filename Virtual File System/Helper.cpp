@@ -7,19 +7,13 @@
 
 void InitialiseSuperBlock()
 {
-	int i = 0 ;
 	SUPERBOLCKobj.TotalInode = MAXINODE;
 	SUPERBOLCKobj.FreeInode  = MAXINODE;
-
-	while ( i < MAX_UFDT)
-	{
-		UFDTArr[i].ptrfiletable = NULL;
-		i++;
-	}
 }
 
 void CreateDILB()
 {
+	// Creating linklist of Inode
 	PINODE newInode = NULL;
 	PINODE temp = head;
 	int i = 1; /* Incode number 0 is not use.
@@ -51,6 +45,16 @@ void CreateDILB()
 	}
 }
 
+void SetUareaForProcess()
+{
+	// initialise UFDT
+	int i = 0;
+	while (i < MAX_UFDT)
+	{
+		UFDTArr[i].ptrfiletable = NULL;
+		i++;
+	}
+}
 //open and create are almost similar
 int OpenFile( char *name , int mode)
 {
@@ -142,7 +146,7 @@ int CreateFile( char *name , int permission )
 	if( GetInode(name) != NULL )
 		return ERR_FILE_EXISTS;
 
-	/* new logic */
+	/* if link_count is 0 then inode is free */
 	while(temp->LinkCount != 0 )
 	{
 		temp = temp->next;
@@ -163,11 +167,14 @@ int CreateFile( char *name , int permission )
 	if( UFDTArr[i].ptrfiletable == NULL )
 		return ERR_MEMORY_ALLOCATION_FAIL;
 
+
+	// Info of FileTable
 	UFDTArr[i].ptrfiletable->count = 1;			//for simplicity we give 1;
 	UFDTArr[i].ptrfiletable->mode  = permission;
 	UFDTArr[i].ptrfiletable->readOffset = 0;
 	UFDTArr[i].ptrfiletable->writeOffset = 0;
 	
+	// Info Inode
 	UFDTArr[i].ptrfiletable->ptrinode = temp;
 
 	strcpy_s( UFDTArr[i].ptrfiletable->ptrinode->FileName , name );
@@ -186,6 +193,7 @@ int CreateFile( char *name , int permission )
 	return i;
 }
 
+// Get Inode from file name
 PINODE GetInode( char* name)
 {
 	PINODE temp = head;

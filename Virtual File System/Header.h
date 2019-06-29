@@ -101,8 +101,10 @@ extern PINODE head;
 void DisplayHelp();
 void man(char *);
 void DisplayError(int );
+
 void InitialiseSuperBlock();
 void CreateDILB();
+void SetUareaForProcess();
 void ls_file();
 
 int CreateFile( char* , int  );
