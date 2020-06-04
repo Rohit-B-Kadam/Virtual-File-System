@@ -1,7 +1,7 @@
 # VIRTUAL FILE SYSTEM (VFS)
 This is Research Oriented Project to simulate the existing Unix File system.
 
-Implement following Filesystem datastructure to build VFS
+## Implement following Filesystem datastructure to build VFS
 1. Superblock
 1. UArea (1)	
 1. UFDT (array) 
